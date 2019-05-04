@@ -1,0 +1,5 @@
+project = "<your gcp project>"
+public_key_path = "~/.ssh/tfuser.pub"
+private_key_path = "~/.ssh/tfuser"
+remote_user = "tfuser"
+source_ip = "<your ipv4 address>"

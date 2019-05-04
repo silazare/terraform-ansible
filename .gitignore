@@ -1,0 +1,10 @@
+*.tfstate
+*.tfstate.*.backup
+*.tfstate.backup
+*.tfvars
+.terraform/
+.terraform.tfstate.lock.info
+*.json
+.vault_pass
+backend.tf
+secret.yml

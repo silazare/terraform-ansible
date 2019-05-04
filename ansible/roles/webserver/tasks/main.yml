@@ -1,0 +1,18 @@
+---
+- name: Create website directory
+  file:
+    path: "/var/www/{{ site_name }}"
+    state: directory
+    mode: 0755
+
+- name: Download static site html at Nginx local templates (Google Drive)
+  get_url:
+    url: "{{ docs_direct_url }}/export?format=tsv"
+    dest: "/var/www/{{ site_name }}/index.html"
+  when: google_drive
+
+- name: Download static site html at Nginx local templates (Direct link)
+  get_url:
+    url: "{{ docs_direct_url }}"
+    dest: "/var/www/{{ site_name }}/index.html"
+  when: not google_drive
