@@ -1,8 +1,9 @@
 ## Terraform with Ansible examples
 
-- [Inline inventory](https://github.com/silazare/terraform-ansible#inline-inventory) with 1 instance
-- [Dynamic inventory](https://github.com/silazare/terraform-ansible#dynamic-inventory) with 3 instances
-- [Terraform-inventory](https://github.com/silazare/terraform-ansible#terraform-inventory) with 3 instances
+- [Inline inventory](https://github.com/silazare/terraform-ansible#inline-inventory)
+- [Dynamic inventory](https://github.com/silazare/terraform-ansible#dynamic-inventory)
+- [Terraform-inventory](https://github.com/silazare/terraform-ansible#terraform-inventory)
+- [Ansible provisioner](https://github.com/silazare/terraform-ansible#ansible-provisioner)
 
 #### Project Structure
 
@@ -10,11 +11,12 @@
 .
 ├── README.md
 ├── ansible
+├── ansible-provisioner-remote
 ├── terraform-dynamic
 └── terraform-inline
 ```
 
-#### Prerequisites with gcloud
+#### GCP prerequisites with gcloud
 
 - Create SSH key and upload it to GCP VM metadata
 ```sh
@@ -57,8 +59,9 @@ https://www.terraform.io/docs/providers/google/getting_started.html
 #### Inline inventory
 
 - GCP provider
-- Ansible executed as Terraform local-provisioner after **terraform apply**
+- GCP remote backend
 - 1 webserver instance is being provisioned
+- Ansible executed as Terraform local-provisioner after **terraform apply**
 
 ```sh
 cd terraform-inline
@@ -77,6 +80,7 @@ terraform destroy -force
 #### Dynamic inventory
 
 - GCP provider
+- GCP remote backend
 - 3 webservers with 1 LoadBalancer
 - Ansible executed separately with custom dynamic [inventory](https://github.com/express42/terraform-ansible-example/blob/master/ansible/dynamic_inventory.sh) pulling from Terraform tfstate:
 
@@ -102,6 +106,7 @@ terraform destroy -force
 #### Terraform-inventory
 
 - GCP provider
+- GCP remote backend
 - 3 webservers with 1 LoadBalancer
 - Ansible executed separately with [Terraform-inventory](https://github.com/adammck/terraform-inventory)
 
@@ -121,3 +126,37 @@ ansible-playbook --inventory-file=$(which terraform-inventory) ../ansible/provis
 terraform destroy -force
 ```
 
+#### Ansible-provisioner
+
+- Digital Ocean provider
+- Digital Ocean remote backend
+- 1 webserver instance is being provisioned
+- Ansible executed as 3rd party [provisioner](https://github.com/radekg/terraform-provisioner-ansible)
+
+##### Provisioner installation steps:
+
+```sh
+curl -sL \
+  https://raw.githubusercontent.com/radekg/terraform-provisioner-ansible/master/bin/deploy-release.sh \
+  --output deploy-release.sh
+
+chmod +x deploy-release.sh
+./deploy-release.sh -v 2.2.0
+rm deploy-release.sh
+```
+
+##### Remote execution:
+
+```sh
+cd ansible-provisioner-remote
+
+terraform init
+
+terraform plan
+
+terraform apply -auto-approve
+
+<HTTP at Droplet Public IP>
+
+terraform destroy -force
+```

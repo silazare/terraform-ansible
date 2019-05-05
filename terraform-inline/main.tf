@@ -1,6 +1,6 @@
 # Provider description
 provider "google" {
-#  credentials = "${file("../../secrets/account-thrashingcode.json")}"
+  #  credentials = "${file("../../secrets/account-thrashingcode.json")}"
   project = "${var.project}"
   region  = "${var.region}"
   zone    = "${var.zone}"

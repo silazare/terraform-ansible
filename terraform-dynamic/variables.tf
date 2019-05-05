@@ -40,6 +40,5 @@ variable "node_count" {
 }
 
 variable "source_ip" {
-   default = "0.0.0.0/0" 
+  default = "0.0.0.0/0"
 }
-

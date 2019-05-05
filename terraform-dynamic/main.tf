@@ -23,7 +23,7 @@ resource "google_compute_firewall" "firewall_ssh" {
 
   source_ranges = ["${var.source_ip}"]
 
-  target_tags = ["webserver","lb"]
+  target_tags = ["webserver", "lb"]
 }
 
 resource "google_compute_firewall" "firewall_http" {
