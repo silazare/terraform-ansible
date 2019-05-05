@@ -1,8 +1,8 @@
 ## Terraform with Ansible examples
 
-- Inline inventory with 1 instance
-- Dynamic inventory with 3 instances
-- [Terraform-inventory](https://github.com/adammck/terraform-inventory) project
+- [Inline inventory](https://github.com/silazare/terraform-ansible#inline-inventory) with 1 instance
+- [Dynamic inventory](https://github.com/silazare/terraform-ansible#dynamic-inventory) with 3 instances
+- [Terraform-inventory](https://github.com/silazare/terraform-ansible#terraform-inventory) with 3 instances
 
 #### Project Structure
 
@@ -50,8 +50,8 @@ https://www.terraform.io/docs/providers/google/getting_started.html
 - [geerlingguy.nginx](https://github.com/geerlingguy/ansible-role-nginx) role is used with a little template customization
 - simple webserver role is used for testing static http site:
 
-  1) static html could be downloaded from GoogleDrive tables format or your direct link ([google_drive](./ansible/webserver/defaults/main.yml) variable set true or false)
-  2) docs_direct_url variable is getting from [vault](./ansible/webserver/vars/secret_example.yml) and vault_pass file should be located at the ansible folder
+  1) static html could be downloaded from GoogleDrive tables format or your direct link ([google_drive](./ansible/roles/webserver/defaults/main.yml) variable set true or false)
+  2) docs_direct_url variable is getting from [vault](./ansible/roles/webserver/vars/secret_example.yml) and vault_pass file should be located at the ansible folder
 
 
 #### Inline inventory
@@ -103,7 +103,7 @@ terraform destroy -force
 
 - GCP provider
 - 3 webservers with 1 LoadBalancer
-- Ansible executed separately with dynamic inventory
+- Ansible executed separately with [Terraform-inventory](https://github.com/adammck/terraform-inventory)
 
 ```sh
 cd terraform-dynamic
