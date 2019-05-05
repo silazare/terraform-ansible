@@ -1,0 +1,6 @@
+do_token = "<Digital Ocean token>"
+region = "<Digital Ocean region>"
+public_key = "~/.ssh/id_rsa.pub"
+private_key = "~/.ssh/id_rsa"
+ssh_fingerprint = "<Digital Ocean SSH key ssh_fingerprint>"
+source_range = "<your ip or ip range>"

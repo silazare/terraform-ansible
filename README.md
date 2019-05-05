@@ -16,9 +16,18 @@
 └── terraform-inline
 ```
 
-#### GCP prerequisites with gcloud
+#### Digital Ocean prerequisites
 
-- Create SSH key and upload it to GCP VM metadata
+- Create SSH key and add public part to Digital Ocean SSH keys
+```sh
+ssh-keygen -t rsa -f ~/.ssh/someuser -C someuser -P ""
+```
+
+- Create API token and Space API secrets for backend
+
+#### GCP prerequisites
+
+- Create SSH key and add public part to GCP VM metadata
 ```sh
 ssh-keygen -t rsa -f ~/.ssh/tfuser -C tfuser -P ""
 ```
@@ -43,17 +52,19 @@ ssh tfuser@$(gcloud compute instances list | awk '{print $5}' | tail -1) -i ~/.s
 gcloud compute instances delete --zone=europe-west1-b webserver
 ```
 
-#### Terraform GCP provider starting guide
+#### Terraform providers starting guide
 
 https://www.terraform.io/docs/providers/google/getting_started.html
+https://www.terraform.io/docs/providers/do/index.html
 
-#### Ansible part
+#### Ansible prerequisites
 
+- Ansible >= 2.7.10
 - [geerlingguy.nginx](https://github.com/geerlingguy/ansible-role-nginx) role is used with a little template customization
 - simple webserver role is used for testing static http site:
 
   1) static html could be downloaded from GoogleDrive tables format or your direct link ([google_drive](./ansible/roles/webserver/defaults/main.yml) variable set true or false)
-  2) docs_direct_url variable is getting from [vault](./ansible/roles/webserver/vars/secret_example.yml) and vault_pass file should be located at the ansible folder
+  2) docs_direct_url variable is getting from [vault](./ansible/roles/webserver/vars/secret_example.yml) and .vault_pass file should be located at the ansible folder
 
 
 #### Inline inventory
