@@ -171,3 +171,19 @@ terraform apply -auto-approve
 
 terraform destroy -force
 ```
+
+##### Local execution:
+
+```sh
+cd ansible-provisioner-local
+
+terraform init
+
+terraform plan
+
+terraform apply -auto-approve
+
+<HTTP at Droplet Public IP>
+
+terraform destroy -force
+```

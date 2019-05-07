@@ -1,4 +1,5 @@
 # ansible-playbook provision_tf_inventory.yml --vault-password-file .vault_pass
+# GCP specific
 ---
 - name: Nginx Webservers Provision
   hosts: webserver

@@ -21,3 +21,7 @@
           server_name: "example.com"
           root: "/var/www/example.com"
           index: "index.html"
+          extra_parameters: |
+            location = /favicon.ico {
+                log_not_found off;
+            }
