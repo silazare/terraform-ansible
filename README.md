@@ -52,6 +52,10 @@ ssh tfuser@$(gcloud compute instances list | awk '{print $5}' | tail -1) -i ~/.s
 gcloud compute instances delete --zone=europe-west1-b webserver
 ```
 
+#### Terraform prerequisites
+terraform >= 0.12
+Terraform Cloud account with access token (https://app.terraform.io)
+
 #### Terraform providers starting guide
 
 https://www.terraform.io/docs/providers/google/getting_started.html
@@ -70,22 +74,37 @@ https://www.terraform.io/docs/providers/do/index.html
 #### Inline inventory
 
 - GCP provider
-- GCP remote backend
+- Terraform Cloud remote backend is used
 - 1 webserver instance is being provisioned
 - Ansible executed as Terraform local-provisioner after **terraform apply**
 
+Initialize providers:
 ```sh
 cd terraform-inline
-
 terraform init
+```
 
+Working in direct mode:
+```sh
 terraform plan
-
 terraform apply -auto-approve
 
-<HTTP at Webserver IP>
+<HTTP at displayed webserver_nat_ip>
 
 terraform destroy -force
+```
+
+Working with plan files:
+```sh
+terraform plan -out=apply.tfplan
+terraform apply apply.tfplan
+
+<HTTP at displayed webserver_nat_ip>
+
+terraform plan -destroy -out=destroy.tfplan
+terraform apply destroy.tfplan
+
+rm -f *.tfplan
 ```
 
 #### Dynamic inventory

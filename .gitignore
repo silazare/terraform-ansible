@@ -8,3 +8,4 @@
 .vault_pass
 backend.tf
 secret.yml
+*.tfplan
