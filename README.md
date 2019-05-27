@@ -53,8 +53,8 @@ gcloud compute instances delete --zone=europe-west1-b webserver
 ```
 
 #### Terraform prerequisites
-terraform >= 0.12
-Terraform Cloud account with access token (https://app.terraform.io)
+- terraform >= 0.12
+- Terraform Cloud account with access token (https://app.terraform.io)
 
 #### Terraform providers starting guide
 
@@ -110,7 +110,7 @@ rm -f *.tfplan
 #### Dynamic inventory
 
 - GCP provider
-- GCP remote backend
+- Terraform Cloud remote backend is used
 - 3 webservers with 1 LoadBalancer
 - Ansible executed separately with custom dynamic [inventory](https://github.com/express42/terraform-ansible-example/blob/master/ansible/dynamic_inventory.sh) pulling from Terraform tfstate:
 
@@ -128,7 +128,7 @@ cd ../ansible
 
 ansible-playbook provision_dynamic.yml --vault-password-file .vault_pass
 
-<HTTP at LoadBalancer IP>
+<HTTP at displayed loadbalancer_nat_ip>
 
 terraform destroy -force
 ```
