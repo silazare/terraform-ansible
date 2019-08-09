@@ -109,6 +109,9 @@ rm -f *.tfplan
 
 #### Dynamic inventory
 
+*Ansible inventory is not working with Terraform v0.12*
+*Need refactoring of terraform.py script*
+
 - GCP provider
 - Terraform Cloud remote backend is used
 - 3 webservers with 1 LoadBalancer

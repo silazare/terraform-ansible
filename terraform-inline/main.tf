@@ -1,6 +1,6 @@
 # Provider description
 provider "google" {
-  version = "~> 2.7"
+  version = "~> 2.12"
   project = var.project
   region  = var.region
   zone    = var.zone
@@ -72,7 +72,7 @@ resource "google_compute_instance" "webserver" {
     inline = ["echo 'Connected!'"]
 
     connection {
-      host = google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip
+      host        = google_compute_instance.webserver.network_interface[0].access_config[0].nat_ip
       type        = "ssh"
       user        = var.remote_user
       private_key = file(var.private_key_path)
