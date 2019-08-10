@@ -55,6 +55,7 @@ gcloud compute instances delete --zone=europe-west1-b webserver
 #### Terraform prerequisites
 - terraform >= 0.12
 - Terraform Cloud account with access token (https://app.terraform.io)
+- terraform-inventory plugin >=0.9
 
 #### Terraform providers starting guide
 
@@ -109,26 +110,23 @@ rm -f *.tfplan
 
 #### Dynamic inventory
 
-*Ansible inventory is not working with Terraform v0.12*
-*Need refactoring of terraform.py script*
+*Inventory script was changed for Terraform v0.12*
+*However is not working with GCP currently*
 
 - GCP provider
 - Terraform Cloud remote backend is used
 - 3 webservers with 1 LoadBalancer
-- Ansible executed separately with custom dynamic [inventory](https://github.com/express42/terraform-ansible-example/blob/master/ansible/dynamic_inventory.sh) pulling from Terraform tfstate:
+- Ansible executed separately with custom dynamic [inventory](https://github.com/express42/terraform-ansible-example/blob/master/ansible/dynamic_inventory.sh) pulling from Terraform tfstate
+- Terraform dynamic inventory is being used from - https://github.com/nbering/terraform-inventory
 
 
 ```sh
 cd terraform-dynamic
-
 terraform init
-
 terraform plan
-
 terraform apply -auto-approve
 
 cd ../ansible
-
 ansible-playbook provision_dynamic.yml --vault-password-file .vault_pass
 
 <HTTP at displayed loadbalancer_nat_ip>
@@ -145,11 +143,8 @@ terraform destroy -force
 
 ```sh
 cd terraform-dynamic
-
 terraform init
-
 terraform plan
-
 terraform apply -auto-approve
 
 ansible-playbook --inventory-file=$(which terraform-inventory) ../ansible/provision_tf_inventory.yml --vault-password-file ../ansible/.vault_pass
