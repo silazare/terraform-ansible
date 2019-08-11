@@ -56,6 +56,7 @@ gcloud compute instances delete --zone=europe-west1-b webserver
 - terraform >= 0.12
 - Terraform Cloud account with access token (https://app.terraform.io)
 - terraform-inventory plugin >=0.9
+- terraform-provisioner-ansible >=2.3.0
 
 #### Terraform providers starting guide
 
@@ -75,7 +76,7 @@ https://www.terraform.io/docs/providers/do/index.html
 #### Inline inventory
 
 - GCP provider
-- Terraform Cloud remote backend is used
+- Terraform Cloud remote backend
 - 1 webserver instance is being provisioned
 - Ansible executed as Terraform local-provisioner after **terraform apply**
 
@@ -111,10 +112,10 @@ rm -f *.tfplan
 #### Dynamic inventory
 
 *Inventory script was changed for Terraform v0.12*
-*However is not working with GCP currently*
+*However it is not working with GCP currently*
 
 - GCP provider
-- Terraform Cloud remote backend is used
+- Terraform Cloud remote backend
 - 3 webservers with 1 LoadBalancer
 - Ansible executed separately with custom dynamic [inventory](https://github.com/express42/terraform-ansible-example/blob/master/ansible/dynamic_inventory.sh) pulling from Terraform tfstate
 - Terraform dynamic inventory is being used from - https://github.com/nbering/terraform-inventory
@@ -136,8 +137,10 @@ terraform destroy -force
 
 #### Terraform-inventory
 
+*Script cannot fetch correct inventory from tfstate*
+
 - GCP provider
-- GCP remote backend
+- Terraform Cloud remote backend
 - 3 webservers with 1 LoadBalancer
 - Ansible executed separately with [Terraform-inventory](https://github.com/adammck/terraform-inventory)
 
@@ -156,9 +159,12 @@ terraform destroy -force
 
 #### Ansible-provisioner
 
+*Need to fix hosts interpolation for Local execution*
+
 - Digital Ocean provider
-- Digital Ocean remote backend
-- 1 webserver instance is being provisioned
+- AWS S3 remote backend
+- 1 webserver instance is being provisioned (Remote execution)
+- 3 webserver instances and 1 LB is being provisioned (Local execution)
 - Ansible executed as 3rd party [provisioner](https://github.com/radekg/terraform-provisioner-ansible)
 
 ##### Provisioner installation steps:
@@ -169,7 +175,7 @@ curl -sL \
   --output deploy-release.sh
 
 chmod +x deploy-release.sh
-./deploy-release.sh -v 2.2.0
+./deploy-release.sh -v 2.3.0
 rm deploy-release.sh
 ```
 
@@ -177,11 +183,8 @@ rm deploy-release.sh
 
 ```sh
 cd ansible-provisioner-remote
-
 terraform init
-
 terraform plan
-
 terraform apply -auto-approve
 
 <HTTP at Droplet Public IP>
@@ -193,14 +196,11 @@ terraform destroy -force
 
 ```sh
 cd ansible-provisioner-local
-
 terraform init
-
 terraform plan
-
 terraform apply -auto-approve
 
-<HTTP at Droplet Public IP>
+<HTTP at Load Balancer IP>
 
 terraform destroy -force
 ```

@@ -1,6 +1,11 @@
 terraform {
-  backend "gcs" {
-    bucket = "<your terraform bucket name>"
-    path   = "terraform_state/dynamic/terraform.tfstate"
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "<your-organization-name>"
+    token        = "<your-secret-token>"
+
+    workspaces {
+      name = "tf-dynamic-test"
+    }
   }
 }

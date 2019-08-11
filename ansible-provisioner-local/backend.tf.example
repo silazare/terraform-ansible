@@ -1,15 +1,9 @@
-# Digital Ocean Space remote backend description
+# AWS S3 remote backend description
 terraform {
   backend "s3" {
-    bucket                      = "<Space bucket name>"
-    key                         = "terraform.tfstate"
-    region                      = "us-east-1"
-    endpoint                    = "ams3.digitaloceanspaces.com"
-    access_key                  = "<Space access_key>"
-    secret_key                  = "<Space secret key>"
-    skip_credentials_validation = true
-    skip_get_ec2_platforms      = true
-    skip_requesting_account_id  = true
-    skip_metadata_api_check     = true
+    bucket  = "<your_bucket_name"
+    key     = "ansible-provisioner-local/terraform.tfstate"
+    region  = "<your_region>"
+    encrypt = true
   }
 }

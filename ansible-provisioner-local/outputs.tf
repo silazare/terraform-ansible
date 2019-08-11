@@ -1,17 +1,18 @@
 # Output variables
 
-output "Droplets Name" {
-  value = "${digitalocean_droplet.webserver.*.name}"
+output "droplets_name" {
+  value = digitalocean_droplet.webserver.*.name
 }
 
-output "Droplets Public IP" {
-  value = "${digitalocean_droplet.webserver.*.ipv4_address}"
+output "droplets_public_ips" {
+  value = digitalocean_droplet.webserver.*.ipv4_address
 }
 
-output "Droplets Private IP" {
-  value = "${digitalocean_droplet.webserver.*.ipv4_address_private}"
+output "droplets_private_ips" {
+  value = digitalocean_droplet.webserver.*.ipv4_address_private
 }
 
-output "Load Balancer IP" {
-  value = "${digitalocean_loadbalancer.loadbalancer.ip}"
+output "load_balancer_ip" {
+  value = digitalocean_loadbalancer.loadbalancer.ip
 }
+

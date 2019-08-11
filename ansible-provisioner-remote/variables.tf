@@ -1,5 +1,5 @@
 # Variables for main.tf
-variable do_token {
+variable "do_token" {
   description = "Digital Ocean API Token"
 }
 
@@ -15,16 +15,16 @@ variable "ssh_fingerprint" {
   description = "Digital Ocean SSH fingerprint"
 }
 
-variable region {
+variable "region" {
   description = "Digital Ocean Region"
 }
 
-variable image {
+variable "image" {
   description = "Droplet Image"
   default     = "centos-7-x64"
 }
 
-variable size {
+variable "size" {
   description = "Droplet size"
   default     = "s-1vcpu-1gb"
 }
@@ -33,3 +33,4 @@ variable "source_range" {
   description = "Digital Ocean firewall source range or IP"
   default     = "0.0.0.0/0"
 }
+
