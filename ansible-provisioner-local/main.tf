@@ -65,7 +65,7 @@ resource "digitalocean_loadbalancer" "loadbalancer" {
 
 resource "digitalocean_droplet" "webserver" {
   image              = var.image
-  name               = "webserver-${count.index + 1}"
+  name               = format("webserver-%02d", count.index + 1)
   region             = var.region
   size               = var.size
   private_networking = true
@@ -79,14 +79,15 @@ resource "digitalocean_droplet" "webserver" {
       playbook {
         file_path = "../ansible/provision_inline.yml"
       }
-      hosts    = ["${digitalocean_droplet.webserver.0.ipv4_address}"] // Ugly Workaround to use local playbook
+      hosts    = [self.ipv4_address]
+      // self allows to access attributes of the resource it is called from and create a list of play hosts
       enabled  = true
       diff     = false
       vault_id = ["../ansible/.vault_pass"]
     }
 
     ansible_ssh_settings {
-      connect_timeout_seconds              = 10
+      connect_timeout_seconds              = 30
       connection_attempts                  = 10
       ssh_keyscan_timeout                  = 60
       insecure_no_strict_host_key_checking = true
