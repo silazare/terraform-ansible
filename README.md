@@ -50,6 +50,12 @@ gcloud compute instances list
 ssh tfuser@$(gcloud compute instances list | awk '{print $5}' | tail -1) -i ~/.ssh/tfuser
 
 gcloud compute instances delete --zone=europe-west1-b webserver
+
+- Create service account with needed permissions and save key file in safe place, export it before terraform run:
+```sh
+export GOOGLE_CLOUD_KEYFILE_JSON={{path_to_key.json}}
+```
+
 ```
 
 #### Terraform prerequisites
@@ -137,15 +143,17 @@ terraform destroy -force
 
 #### Terraform-inventory
 
-*Script cannot fetch correct inventory from tfstate*
+*Script cannot fetch correct inventory from tfstate, fetch hosts/groups as vars*
 
 - GCP provider
+- GCP service account key file
 - Terraform Cloud remote backend
 - 3 webservers with 1 LoadBalancer
 - Ansible executed separately with [Terraform-inventory](https://github.com/adammck/terraform-inventory)
 
 ```sh
 cd terraform-dynamic
+export GOOGLE_CLOUD_KEYFILE_JSON={{path_to_key.json}}
 terraform init
 terraform plan
 terraform apply -auto-approve
